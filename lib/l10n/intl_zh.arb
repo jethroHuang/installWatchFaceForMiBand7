@@ -1,0 +1,16 @@
+{
+    "appName": "偷天换日",
+    "healthEntry": "小米运动健康表盘替换",
+    "zeppLifeEntry": "Zepp Life 表盘替换",
+    "rewardMe": "⛄请作者喝杯蜜雪冰城👈",
+    "firstSelectFace": "请先选择表盘",
+    "firstGivePromise": "请先授权",
+    "deletedNowFace": "已删除现有表盘",
+    "dontFundWatchFace": "未发现火星时代表盘，请先安装使用表盘：",
+    "targetName": "火星时代",
+    "replaceSuccess": "替换完成",
+    "tipsTitle": "提示",
+    "gotIt": "知道了",
+    "health_setTipsContent": "自定义被替换的表盘需要权限访问WatchFace目录，请在接下来的页面中选择“使用此文件夹”",
+    "health_shiYongShuoMing": "使用说明：\n       替换表盘需要先在表盘市场安装[$targetName]表盘，然后回到我的表盘，打开[$targetName]并停留在表盘使用页。将小米运动健康放置到后台再打开本app开始按步骤操作。点击对应步骤即可。"
+}
