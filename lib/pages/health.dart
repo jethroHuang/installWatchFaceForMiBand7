@@ -179,10 +179,13 @@ class _HealthPageState extends State<HealthPage> with RouteAware {
           RegExp(r"\$targetName"),
           targetName,
         );
-
+    String stateLabel = S.of(context).workingState;
+    String working = S.of(context).working;
+    String waiting = S.of(context).noWorking;
+    S s = S.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("复制表盘->小米运动健康"),
+        title: Text(S.of(context).health_appbarTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
@@ -201,16 +204,16 @@ class _HealthPageState extends State<HealthPage> with RouteAware {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(useTxt),
-                  const Text(
-                    "\n此页面的功能仅适用于小米手环7+小米运动健康",
-                    style: TextStyle(color: Colors.red),
+                  Text(
+                    S.of(context).health_waring,
+                    style: const TextStyle(color: Colors.red),
                   )
                 ],
               ),
             ),
             Center(
               child: Text(
-                "工作状态: ${listening ? "替换中" : "等待开始"}",
+                "$stateLabel: ${listening ? working : waiting}",
                 style:
                     TextStyle(color: listening ? Colors.green : Colors.black87),
               ),
@@ -220,9 +223,9 @@ class _HealthPageState extends State<HealthPage> with RouteAware {
               child: ValueListenableBuilder(
                 valueListenable: ctl.havePromise,
                 builder: (ctx, bool val, child) {
-                  var promise = "1. 授权访问小米运动健康内部数据";
+                  var promise = "1. ${s.health_step1}";
                   if (val) {
-                    promise = "$promise(已授权)";
+                    promise = "$promise${s.health_step1_state}";
                   }
                   return SizedBox(
                     width: double.infinity,
@@ -236,9 +239,9 @@ class _HealthPageState extends State<HealthPage> with RouteAware {
               child: ValueListenableBuilder(
                 valueListenable: ctl.selectName,
                 builder: (context, String val, child) {
-                  var selectText = "2. 选择你要替换的表盘";
+                  var selectText = "2. ${s.health_step2}";
                   if (val.isNotEmpty) {
-                    selectText = "$selectText(已选择：$val)";
+                    selectText = "$selectText(${s.health_step2_state}$val)";
                   }
                   return SizedBox(
                     width: double.infinity,
@@ -249,9 +252,9 @@ class _HealthPageState extends State<HealthPage> with RouteAware {
             ),
             MaterialButton(
               onPressed: startFind,
-              child: const SizedBox(
+              child: SizedBox(
                 width: double.infinity,
-                child: Text("3. 开始替换"),
+                child: Text("3. ${s.health_step3}"),
               ),
             ),
             MaterialButton(

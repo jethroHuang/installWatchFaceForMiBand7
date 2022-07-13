@@ -11,6 +11,17 @@
     "replaceSuccess": "replacement completed",
     "tips_title": "Tips",
     "gotIt": "got it",
+    "workingState": "working status: ",
+    "working": "replacement in progress",
+    "noWorking": "waiting for the start",
     "health_setTipsContent": "Customizing the replaced WatchFace requires permission to access the WatchFace directory, please select 'Use this folder' on the next page",
-    "health_shiYongShuoMing": "directions for use: \n       To replace a WatchFace, you need to apply the [$targetName] WatchFace in the Band displays online first. and then back to Local, open [$targetName] and stay on the WatchFace apply page. place Mi Fitness in the background and then open this app to start following the steps."
+    "health_shiYongShuoMing": "directions for use: \n       To replace a WatchFace, you need to apply the [$targetName] WatchFace in the Band displays online first. and then back to Local, open [$targetName] and stay on the WatchFace apply page. place Mi Fitness in the background and then open this app to start following the steps.",
+    "health_appbarTitle": "copy WatchFace->Mi Fitness",
+    "health_waring": "\nthe features on this page are only available for Xiaomi Band 7 + Mi Fitness",
+    "health_step1": "give me permission to the internal data",
+    "health_step1_state": "(have permission)",
+    "health_step2": "select the WatchFace you want to replace",
+    "health_step2_state": "selected:",
+    "health_step3": "began to replace",
+    "health_step4": "Open Mi Fitness and apply the [$targetName] WatchFace"
 }

@@ -35,16 +35,37 @@ class MessageLookup extends MessageLookupByLibrary {
         "gotIt": MessageLookupByLibrary.simpleMessage("got it"),
         "healthEntry":
             MessageLookupByLibrary.simpleMessage("Mi Fitness Replacement"),
+        "health_appbarTitle":
+            MessageLookupByLibrary.simpleMessage("copy WatchFace->Mi Fitness"),
         "health_setTipsContent": MessageLookupByLibrary.simpleMessage(
             "Customizing the replaced WatchFace requires permission to access the WatchFace directory, please select \'Use this folder\' on the next page"),
         "health_shiYongShuoMing": MessageLookupByLibrary.simpleMessage(
             "directions for use: \n       To replace a WatchFace, you need to apply the [\$targetName] WatchFace in the Band displays online first. and then back to Local, open [\$targetName] and stay on the WatchFace apply page. place Mi Fitness in the background and then open this app to start following the steps."),
+        "health_step1": MessageLookupByLibrary.simpleMessage(
+            "give me permission to the internal data"),
+        "health_step1_state":
+            MessageLookupByLibrary.simpleMessage("(have permission)"),
+        "health_step2": MessageLookupByLibrary.simpleMessage(
+            "select the WatchFace you want to replace"),
+        "health_step2_state": MessageLookupByLibrary.simpleMessage("selected:"),
+        "health_step3":
+            MessageLookupByLibrary.simpleMessage("began to replace"),
+        "health_step4": MessageLookupByLibrary.simpleMessage(
+            "Open Mi Fitness and apply the [\$targetName] WatchFace"),
+        "health_waring": MessageLookupByLibrary.simpleMessage(
+            "\nthe features on this page are only available for Xiaomi Band 7 + Mi Fitness"),
+        "noWorking":
+            MessageLookupByLibrary.simpleMessage("waiting for the start"),
         "replaceSuccess":
             MessageLookupByLibrary.simpleMessage("replacement completed"),
         "rewardMe": MessageLookupByLibrary.simpleMessage(
             "☕buy the author a cup of coffee👈"),
         "targetName": MessageLookupByLibrary.simpleMessage("age of mars"),
         "tips_title": MessageLookupByLibrary.simpleMessage("Tips"),
+        "working":
+            MessageLookupByLibrary.simpleMessage("replacement in progress"),
+        "workingState":
+            MessageLookupByLibrary.simpleMessage("working status: "),
         "zeppLifeEntry":
             MessageLookupByLibrary.simpleMessage("zepp Life Replacement")
       };

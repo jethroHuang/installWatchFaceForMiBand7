@@ -170,6 +170,36 @@ class S {
     );
   }
 
+  /// `working status: `
+  String get workingState {
+    return Intl.message(
+      'working status: ',
+      name: 'workingState',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `replacement in progress`
+  String get working {
+    return Intl.message(
+      'replacement in progress',
+      name: 'working',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `waiting for the start`
+  String get noWorking {
+    return Intl.message(
+      'waiting for the start',
+      name: 'noWorking',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Customizing the replaced WatchFace requires permission to access the WatchFace directory, please select 'Use this folder' on the next page`
   String get health_setTipsContent {
     return Intl.message(
@@ -185,6 +215,86 @@ class S {
     return Intl.message(
       'directions for use: \n       To replace a WatchFace, you need to apply the [\$targetName] WatchFace in the Band displays online first. and then back to Local, open [\$targetName] and stay on the WatchFace apply page. place Mi Fitness in the background and then open this app to start following the steps.',
       name: 'health_shiYongShuoMing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `copy WatchFace->Mi Fitness`
+  String get health_appbarTitle {
+    return Intl.message(
+      'copy WatchFace->Mi Fitness',
+      name: 'health_appbarTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `\nthe features on this page are only available for Xiaomi Band 7 + Mi Fitness`
+  String get health_waring {
+    return Intl.message(
+      '\nthe features on this page are only available for Xiaomi Band 7 + Mi Fitness',
+      name: 'health_waring',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `give me permission to the internal data`
+  String get health_step1 {
+    return Intl.message(
+      'give me permission to the internal data',
+      name: 'health_step1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `(have permission)`
+  String get health_step1_state {
+    return Intl.message(
+      '(have permission)',
+      name: 'health_step1_state',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `select the WatchFace you want to replace`
+  String get health_step2 {
+    return Intl.message(
+      'select the WatchFace you want to replace',
+      name: 'health_step2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `selected:`
+  String get health_step2_state {
+    return Intl.message(
+      'selected:',
+      name: 'health_step2_state',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `began to replace`
+  String get health_step3 {
+    return Intl.message(
+      'began to replace',
+      name: 'health_step3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open Mi Fitness and apply the [$targetName] WatchFace`
+  String get health_step4 {
+    return Intl.message(
+      'Open Mi Fitness and apply the [\$targetName] WatchFace',
+      name: 'health_step4',
       desc: '',
       args: [],
     );

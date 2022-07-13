@@ -11,6 +11,17 @@
     "replaceSuccess": "替换完成",
     "tipsTitle": "提示",
     "gotIt": "知道了",
+    "workingState": "工作状态: ",
+    "working": "替换中",
+    "noWorking": "等待开始",
     "health_setTipsContent": "自定义被替换的表盘需要权限访问WatchFace目录，请在接下来的页面中选择“使用此文件夹”",
-    "health_shiYongShuoMing": "使用说明：\n       替换表盘需要先在表盘市场安装[$targetName]表盘，然后回到我的表盘，打开[$targetName]并停留在表盘使用页。将小米运动健康放置到后台再打开本app开始按步骤操作。点击对应步骤即可。"
+    "health_shiYongShuoMing": "使用说明：\n       替换表盘需要先在表盘市场安装[$targetName]表盘，然后回到我的表盘，打开[$targetName]并停留在表盘使用页。将小米运动健康放置到后台再打开本app开始按步骤操作。点击对应步骤即可。",
+    "health_appbarTitle": "复制表盘->小米运动健康",
+    "health_waring": "\n此页面的功能仅适用于小米手环7+小米运动健康",
+    "health_step1": "授权访问小米运动健康内部数据",
+    "health_step1_state": "(已授权)",
+    "health_step2": "选择你要替换的表盘",
+    "health_step2_state": "已选择：",
+    "health_step3": "开始替换",
+    "health_step4": "打开小米运动健康，启用[$targetName]表盘"
 }

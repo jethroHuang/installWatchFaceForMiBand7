@@ -30,13 +30,27 @@ class MessageLookup extends MessageLookupByLibrary {
         "firstSelectFace": MessageLookupByLibrary.simpleMessage("请先选择表盘"),
         "gotIt": MessageLookupByLibrary.simpleMessage("知道了"),
         "healthEntry": MessageLookupByLibrary.simpleMessage("小米运动健康表盘替换"),
+        "health_appbarTitle":
+            MessageLookupByLibrary.simpleMessage("复制表盘->小米运动健康"),
         "health_setTipsContent": MessageLookupByLibrary.simpleMessage(
             "自定义被替换的表盘需要权限访问WatchFace目录，请在接下来的页面中选择“使用此文件夹”"),
         "health_shiYongShuoMing": MessageLookupByLibrary.simpleMessage(
             "使用说明：\n       替换表盘需要先在表盘市场安装[\$targetName]表盘，然后回到我的表盘，打开[\$targetName]并停留在表盘使用页。将小米运动健康放置到后台再打开本app开始按步骤操作。点击对应步骤即可。"),
+        "health_step1": MessageLookupByLibrary.simpleMessage("授权访问小米运动健康内部数据"),
+        "health_step1_state": MessageLookupByLibrary.simpleMessage("(已授权)"),
+        "health_step2": MessageLookupByLibrary.simpleMessage("选择你要替换的表盘"),
+        "health_step2_state": MessageLookupByLibrary.simpleMessage("已选择："),
+        "health_step3": MessageLookupByLibrary.simpleMessage("开始替换"),
+        "health_step4":
+            MessageLookupByLibrary.simpleMessage("打开小米运动健康，启用[\$targetName]表盘"),
+        "health_waring":
+            MessageLookupByLibrary.simpleMessage("\n此页面的功能仅适用于小米手环7+小米运动健康"),
+        "noWorking": MessageLookupByLibrary.simpleMessage("等待开始"),
         "replaceSuccess": MessageLookupByLibrary.simpleMessage("替换完成"),
         "rewardMe": MessageLookupByLibrary.simpleMessage("⛄请作者喝杯蜜雪冰城👈"),
         "targetName": MessageLookupByLibrary.simpleMessage("火星时代"),
+        "working": MessageLookupByLibrary.simpleMessage("替换中"),
+        "workingState": MessageLookupByLibrary.simpleMessage("工作状态: "),
         "zeppLifeEntry": MessageLookupByLibrary.simpleMessage("Zepp Life 表盘替换")
       };
 }
