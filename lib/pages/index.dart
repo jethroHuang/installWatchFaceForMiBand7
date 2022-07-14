@@ -50,10 +50,10 @@ class _IndexPageState extends State<IndexPage> {
                   onPressed: () => context.push("/zepp_life"),
                   child: Text(S.of(context).zeppLifeEntry),
                 ),
-                // ElevatedButton(
-                //   onPressed: () => context.push("/set_target"),
-                //   child: const Text("蓝牙安装"),
-                // ),
+                ElevatedButton(
+                  onPressed: () => context.push("/ble_install"),
+                  child: const Text("蓝牙安装 "),
+                ),
               ],
             ),
           ),

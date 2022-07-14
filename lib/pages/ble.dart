@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:ffi';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
@@ -20,6 +22,7 @@ class _BlePageState extends State<BlePage> {
   final List<DiscoveredDevice> devs = [];
 
   DiscoveredDevice? connetDev;
+  StreamSubscription<ConnectionStateUpdate>? sub;
 
   Future scan() async {
     print("开始扫描");
@@ -38,7 +41,7 @@ class _BlePageState extends State<BlePage> {
   }
 
   clickDev(DiscoveredDevice dev) {
-    flutterReactiveBle
+    sub = flutterReactiveBle
         .connectToDevice(
       id: dev.id,
       connectionTimeout: const Duration(seconds: 10),
@@ -78,6 +81,7 @@ class _BlePageState extends State<BlePage> {
   @override
   void dispose() {
     flutterReactiveBle.deinitialize();
+    sub?.cancel();
     super.dispose();
   }
 
@@ -121,6 +125,7 @@ class _ConnectState extends StatefulWidget {
 class __ConnectStateState extends State<_ConnectState> {
   ValueNotifier<String> customWatchPath = ValueNotifier("");
   ValueNotifier<String> selectName = ValueNotifier(""); // 已选择的表盘
+  Stream<List<int>>? stream;
 
   getBettery() async {
     var chara = await findCharacteristic("0000180f", "00002a19");
@@ -140,46 +145,84 @@ class __ConnectStateState extends State<_ConnectState> {
     print("完成操作");
   }
 
+  Future<List<int>> awaitRes() {
+    if (stream == null) throw Exception("未订阅");
+    Completer<List<int>> c = Completer();
+    StreamSubscription? sub;
+    sub = stream?.listen((event) {
+      c.complete(event);
+      sub!.cancel();
+    });
+    return c.future;
+  }
+
+  String print16hex(List<int> data) {
+    return data
+        .map((e) => e.toRadixString(16).padLeft(2, "0"))
+        .toList()
+        .toString();
+  }
+
   start() async {
     var char = await findCharacteristic("00001530", "00001531");
     var charWiret = await findCharacteristic("00001530", "00001532");
-    widget.ble.subscribeToCharacteristic(char).listen((event) {
-      print("event: $event");
-    });
+    stream = widget.ble.subscribeToCharacteristic(char).asBroadcastStream();
     var file = File(customWatchPath.value);
     var bytes = await file.readAsBytes();
     var crc = Crc32().convert(bytes).toBigInt();
     print("crc: $crc");
     final bytesBuilder = BytesBuilder();
-    bytesBuilder.add([0x01, 0x08]);
+    bytesBuilder.add([0xd2, 0x08]);
     // 将长度转换为3个字节大小的16进制字符串
     var hexStr = bytes.length.toRadixString(16).padLeft(6, "0");
     bytesBuilder.add(hexStrToUint8ListBeLittle(hexStr));
     bytesBuilder.addByte(0x00);
     var crcHex = crc.toRadixString(16).padLeft(8, "0");
     bytesBuilder.add(hexStrToUint8ListBeLittle(crcHex));
+    bytesBuilder.add([0x00, 0x20, 0x00, 0xff]);
+    print("lengthHex: $hexStr");
+    print("crcHex: $crcHex");
+    print("length info: ${print16hex(bytesBuilder.toBytes())}");
     print("开始确认");
-    await widget.ble.writeCharacteristicWithResponse(
-      char,
-      value: bytesBuilder.toBytes(),
-    );
 
-    sleep(Duration(seconds: 2));
-    await widget.ble.writeCharacteristicWithResponse(
-      char,
-      value: [0x03, 0x01],
-    );
+    Future sendData(data) async {
+      var res = awaitRes();
+      await widget.ble.writeCharacteristicWithResponse(
+        char,
+        value: data,
+      );
+      var d = await res;
+      print("notify ${print16hex(d)}");
+    }
+
+    print("send d0");
+    await sendData([0xd0]);
+
+    print("send d1");
+    await sendData([0xd1]);
+
+    print("send length");
+    await sendData(bytesBuilder.toBytes());
+
+    print("send d3 01");
+    await sendData([0xd3, 0x01]);
+
     print("确认完成");
     var flag = 0;
+    var res = awaitRes();
     while (flag < bytes.length) {
-      var p = bytes.getRange(flag, min(flag + 20, bytes.length)).toList();
+      var size = 244;
+      var p = bytes.getRange(flag, min(flag + size, bytes.length)).toList();
       await widget.ble.writeCharacteristicWithoutResponse(charWiret, value: p);
-      flag = flag + 20;
+      flag = flag + size;
     }
+    var data = await res;
+    print("end ${print16hex(data)}");
     print("传输完成");
-    await widget.ble.writeCharacteristicWithResponse(char, value: [0x00]);
-    sleep(Duration(seconds: 2));
-    await widget.ble.writeCharacteristicWithResponse(char, value: [0x04]);
+    await widget.ble.writeCharacteristicWithResponse(char, value: [0xd5]);
+    await widget.ble.writeCharacteristicWithResponse(char, value: [0xd1]);
+    await widget.ble.writeCharacteristicWithResponse(char, value: [0xd6]);
+    await widget.ble.writeCharacteristicWithResponse(char, value: [0xd1]);
     print("全部执行完成");
   }
 
@@ -261,5 +304,10 @@ class __ConnectStateState extends State<_ConnectState> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }
