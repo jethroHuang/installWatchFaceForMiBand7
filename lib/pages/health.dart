@@ -175,14 +175,18 @@ class _HealthPageState extends State<HealthPage> with RouteAware {
 
   @override
   Widget build(BuildContext context) {
-    var useTxt = S.of(context).health_shiYongShuoMing.replaceAll(
-          RegExp(r"\$targetName"),
-          targetName,
-        );
-    String stateLabel = S.of(context).workingState;
-    String working = S.of(context).working;
-    String waiting = S.of(context).noWorking;
     S s = S.of(context);
+
+    var useTxt = s.health_shiYongShuoMing.replaceAll(
+      RegExp(r"\$targetName"),
+      targetName,
+    );
+
+    String stateLabel = s.workingState;
+    String working = s.working;
+    String waiting = s.noWorking;
+    String step4Text =
+        s.health_step4.replaceAll(RegExp(r"\$targetName"), targetName);
     return Scaffold(
       appBar: AppBar(
         title: Text(S.of(context).health_appbarTitle),
@@ -213,7 +217,7 @@ class _HealthPageState extends State<HealthPage> with RouteAware {
             ),
             Center(
               child: Text(
-                "$stateLabel: ${listening ? working : waiting}",
+                "$stateLabel ${listening ? working : waiting}",
                 style:
                     TextStyle(color: listening ? Colors.green : Colors.black87),
               ),
@@ -261,7 +265,7 @@ class _HealthPageState extends State<HealthPage> with RouteAware {
               onPressed: openXMYD,
               child: SizedBox(
                 width: double.infinity,
-                child: Text("4. 打开小米运动健康，启用[$targetName]表盘"),
+                child: Text("4. $step4Text"),
               ),
             ),
             buildTools(),
@@ -272,6 +276,8 @@ class _HealthPageState extends State<HealthPage> with RouteAware {
   }
 
   buildTools() {
+    var s = S.of(context);
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.only(top: 64.0),
@@ -279,12 +285,12 @@ class _HealthPageState extends State<HealthPage> with RouteAware {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "其他工具",
+            s.health_otherTools,
             style: Theme.of(context).textTheme.headline6,
           ),
           ElevatedButton(
             onPressed: () => ctl.delAllFile(),
-            child: const Text("清空WatchFace目录"),
+            child: Text(s.health_clearWatchFace),
           )
         ],
       ),

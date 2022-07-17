@@ -153,7 +153,9 @@ class __ConnectStateState extends State<_ConnectState> {
       c.complete(event);
       sub!.cancel();
     });
-    return c.future;
+    return c.future.timeout(const Duration(seconds: 10), onTimeout: () {
+      return Future.error(Exception("等待超时"));
+    });
   }
 
   String print16hex(List<int> data) {
@@ -163,10 +165,39 @@ class __ConnectStateState extends State<_ConnectState> {
         .toString();
   }
 
+  Future onSyncEnd(length) {
+    Completer c = Completer();
+    StreamSubscription? sub;
+    sub = stream?.listen((event) {
+      if (event.length != 7) return;
+      var hexLen = event
+          .sublist(2, 5)
+          .map((e) => e.toRadixString(16))
+          .toList()
+          .reversed
+          .join("");
+      var len = int.parse(hexLen, radix: 16);
+      print("end len: $len");
+      if (len == length) {
+        c.complete();
+        sub?.cancel();
+      }
+    });
+    return c.future.timeout(const Duration(seconds: 10), onTimeout: () {
+      return Future.error(Exception("等待超时"));
+    });
+  }
+
   start() async {
     var char = await findCharacteristic("00001530", "00001531");
     var charWiret = await findCharacteristic("00001530", "00001532");
-    stream = widget.ble.subscribeToCharacteristic(char).asBroadcastStream();
+    if (stream == null) {
+      stream = widget.ble.subscribeToCharacteristic(char).asBroadcastStream();
+      stream?.listen((event) {
+        print("[${DateTime.now()}]收到通知：${print16hex(event)}");
+      });
+    }
+
     var file = File(customWatchPath.value);
     var bytes = await file.readAsBytes();
     var crc = Crc32().convert(bytes).toBigInt();
@@ -174,7 +205,8 @@ class __ConnectStateState extends State<_ConnectState> {
     final bytesBuilder = BytesBuilder();
     bytesBuilder.add([0xd2, 0x08]);
     // 将长度转换为3个字节大小的16进制字符串
-    var hexStr = bytes.length.toRadixString(16).padLeft(6, "0");
+    var bytesLength = bytes.length;
+    var hexStr = bytesLength.toRadixString(16).padLeft(6, "0");
     bytesBuilder.add(hexStrToUint8ListBeLittle(hexStr));
     bytesBuilder.addByte(0x00);
     var crcHex = crc.toRadixString(16).padLeft(8, "0");
@@ -195,34 +227,48 @@ class __ConnectStateState extends State<_ConnectState> {
       print("notify ${print16hex(d)}");
     }
 
-    print("send d0");
     await sendData([0xd0]);
-
-    print("send d1");
     await sendData([0xd1]);
-
-    print("send length");
     await sendData(bytesBuilder.toBytes());
-
-    print("send d3 01");
     await sendData([0xd3, 0x01]);
 
     print("确认完成");
     var flag = 0;
     var res = awaitRes();
+    const int times = 33;
+    int time = 0;
     while (flag < bytes.length) {
-      var size = 244;
-      var p = bytes.getRange(flag, min(flag + size, bytes.length)).toList();
+      if (time == times) {
+        // 如果已发送了33次256的包，就发送一个152的包。
+        int size = 140;
+        if (flag + size > bytes.length) {
+          size = bytes.length - flag;
+        }
+        var p = bytes.getRange(flag, flag + size).toList();
+        await widget.ble
+            .writeCharacteristicWithoutResponse(charWiret, value: p);
+        var send = await res;
+        res = awaitRes();
+        print("已同步长度: ${print16hex(send)}");
+        time = 0;
+        flag = flag + size;
+        continue;
+      }
+      int size = 244;
+      if (flag + size > bytes.length) {
+        size = bytes.length - flag;
+      }
+      List<int> p = bytes.getRange(flag, flag + size).toList();
       await widget.ble.writeCharacteristicWithoutResponse(charWiret, value: p);
       flag = flag + size;
+      time++;
     }
-    var data = await res;
-    print("end ${print16hex(data)}");
-    print("传输完成");
-    await widget.ble.writeCharacteristicWithResponse(char, value: [0xd5]);
-    await widget.ble.writeCharacteristicWithResponse(char, value: [0xd1]);
-    await widget.ble.writeCharacteristicWithResponse(char, value: [0xd6]);
-    await widget.ble.writeCharacteristicWithResponse(char, value: [0xd1]);
+    print("等待同步完成");
+    await onSyncEnd(bytesLength);
+    print("同步完成");
+
+    await sendData([0xd5]);
+    await sendData([0xd6]);
     print("全部执行完成");
   }
 

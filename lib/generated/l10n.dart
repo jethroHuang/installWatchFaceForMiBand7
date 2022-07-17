@@ -50,10 +50,10 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `replace your watchFace`
+  /// `偷天换日`
   String get appName {
     return Intl.message(
-      'replace your watchFace',
+      '偷天换日',
       name: 'appName',
       desc: '',
       args: [],
@@ -80,10 +80,10 @@ class S {
     );
   }
 
-  /// `☕buy the author a cup of coffee👈`
+  /// `☕buy the developers a cup of coffee👈`
   String get rewardMe {
     return Intl.message(
-      '☕buy the author a cup of coffee👈',
+      '☕buy the developers a cup of coffee👈',
       name: 'rewardMe',
       desc: '',
       args: [],
@@ -110,11 +110,51 @@ class S {
     );
   }
 
+  /// `App has successfully obtained permissions`
+  String get getPromise {
+    return Intl.message(
+      'App has successfully obtained permissions',
+      name: 'getPromise',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `App does not have permission`
+  String get notPromise {
+    return Intl.message(
+      'App does not have permission',
+      name: 'notPromise',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `deleted existing WatchFace`
   String get deletedNowFace {
     return Intl.message(
       'deleted existing WatchFace',
       name: 'deletedNowFace',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to delete the WatchFace`
+  String get delFaceFail {
+    return Intl.message(
+      'Failed to delete the WatchFace',
+      name: 'delFaceFail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All files have been deleted`
+  String get clearDirectorySuccess {
+    return Intl.message(
+      'All files have been deleted',
+      name: 'clearDirectorySuccess',
       desc: '',
       args: [],
     );
@@ -145,6 +185,16 @@ class S {
     return Intl.message(
       'replacement completed',
       name: 'replaceSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `replacement fail`
+  String get replaceFail {
+    return Intl.message(
+      'replacement fail',
+      name: 'replaceFail',
       desc: '',
       args: [],
     );
@@ -200,6 +250,26 @@ class S {
     );
   }
 
+  /// `sure`
+  String get sure {
+    return Intl.message(
+      'sure',
+      name: 'sure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `cancel`
+  String get cancel {
+    return Intl.message(
+      'cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Customizing the replaced WatchFace requires permission to access the WatchFace directory, please select 'Use this folder' on the next page`
   String get health_setTipsContent {
     return Intl.message(
@@ -220,10 +290,10 @@ class S {
     );
   }
 
-  /// `copy WatchFace->Mi Fitness`
+  /// `copy to Mi Fitness`
   String get health_appbarTitle {
     return Intl.message(
-      'copy WatchFace->Mi Fitness',
+      'copy to Mi Fitness',
       name: 'health_appbarTitle',
       desc: '',
       args: [],
@@ -290,11 +360,261 @@ class S {
     );
   }
 
-  /// `Open Mi Fitness and apply the [$targetName] WatchFace`
+  /// `open Mi Fitness and apply the [$targetName] WatchFace`
   String get health_step4 {
     return Intl.message(
-      'Open Mi Fitness and apply the [\$targetName] WatchFace',
+      'open Mi Fitness and apply the [\$targetName] WatchFace',
       name: 'health_step4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `other tools`
+  String get health_otherTools {
+    return Intl.message(
+      'other tools',
+      name: 'health_otherTools',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `clear the WatchFace directory`
+  String get health_clearWatchFace {
+    return Intl.message(
+      'clear the WatchFace directory',
+      name: 'health_clearWatchFace',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Set up the success`
+  String get set_target_setSuccess {
+    return Intl.message(
+      'Set up the success',
+      name: 'set_target_setSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Note watchFace name`
+  String get set_target_noteTitle {
+    return Intl.message(
+      'Note watchFace name',
+      name: 'set_target_noteTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Because the file name is not readable, you need to manually enter the name of the WatchFace that corresponds to the file for later correspondence.`
+  String get set_target_noteDesc {
+    return Intl.message(
+      'Because the file name is not readable, you need to manually enter the name of the WatchFace that corresponds to the file for later correspondence.',
+      name: 'set_target_noteDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter watchFace name here`
+  String get set_target_inputHint {
+    return Intl.message(
+      'Please enter watchFace name here',
+      name: 'set_target_inputHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter the name of the WatchFace you selected for remarks`
+  String get set_target_noNameToast {
+    return Intl.message(
+      'Please enter the name of the WatchFace you selected for remarks',
+      name: 'set_target_noNameToast',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `If you know the name of the file that corresponds to the replaced WatchFace, you can select the file here. The app will save the Settings and replace the files you choose later.\n\nIt is recommended to install the dial to be selected normally before selection to avoid incorrect information obtained by APP.`
+  String get set_target_shuoMing {
+    return Intl.message(
+      'If you know the name of the file that corresponds to the replaced WatchFace, you can select the file here. The app will save the Settings and replace the files you choose later.\n\nIt is recommended to install the dial to be selected normally before selection to avoid incorrect information obtained by APP.',
+      name: 'set_target_shuoMing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Customize the replacement watchFace file`
+  String get set_target_appbar_title {
+    return Intl.message(
+      'Customize the replacement watchFace file',
+      name: 'set_target_appbar_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `file list`
+  String get set_target_file_list {
+    return Intl.message(
+      'file list',
+      name: 'set_target_file_list',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown File`
+  String get set_target_unknownFile {
+    return Intl.message(
+      'Unknown File',
+      name: 'set_target_unknownFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `File name: `
+  String get set_target_fileName {
+    return Intl.message(
+      'File name: ',
+      name: 'set_target_fileName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `File length: `
+  String get set_target_fileSize {
+    return Intl.message(
+      'File length: ',
+      name: 'set_target_fileSize',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select`
+  String get set_target_select {
+    return Intl.message(
+      'Select',
+      name: 'set_target_select',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `the replacement succeeded. please apply the [$targetName] WatchFace in the Zepp Life local WatchFace`
+  String get zepplife_success {
+    return Intl.message(
+      'the replacement succeeded. please apply the [\$targetName] WatchFace in the Zepp Life local WatchFace',
+      name: 'zepplife_success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to create directory. Please install WatchFace in 'zepp life' first`
+  String get zepplife_createDirFail {
+    return Intl.message(
+      'Failed to create directory. Please install WatchFace in \'zepp life\' first',
+      name: 'zepplife_createDirFail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `directions for use: \n    The first step is to select the WatchFace you want to replace. Step 2, give me permission. Step 3, click replace now, open the WatchFace management in the 'zepp life', there is a [$targetName] WatchFace in the local WatchFace, click apply watchFace.`
+  String get zepplife_shiYongShuoMing {
+    return Intl.message(
+      'directions for use: \n    The first step is to select the WatchFace you want to replace. Step 2, give me permission. Step 3, click replace now, open the WatchFace management in the \'zepp life\', there is a [\$targetName] WatchFace in the local WatchFace, click apply watchFace.',
+      name: 'zepplife_shiYongShuoMing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `copy to Zepp Life`
+  String get zepplife_appbarTitle {
+    return Intl.message(
+      'copy to Zepp Life',
+      name: 'zepplife_appbarTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `\nthe features on this page are only available for Xiaomi Band 7 + Zepp Life`
+  String get zepplife_waring {
+    return Intl.message(
+      '\nthe features on this page are only available for Xiaomi Band 7 + Zepp Life',
+      name: 'zepplife_waring',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `select the WatchFace you want to replace`
+  String get zepplife_step1 {
+    return Intl.message(
+      'select the WatchFace you want to replace',
+      name: 'zepplife_step1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `selected: `
+  String get zepplife_step1_state {
+    return Intl.message(
+      'selected: ',
+      name: 'zepplife_step1_state',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `give me permission to the internal data`
+  String get zepplife_step2 {
+    return Intl.message(
+      'give me permission to the internal data',
+      name: 'zepplife_step2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `(have permission)`
+  String get zepplife_step2_state {
+    return Intl.message(
+      '(have permission)',
+      name: 'zepplife_step2_state',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Immediately replace`
+  String get zepplife_step3 {
+    return Intl.message(
+      'Immediately replace',
+      name: 'zepplife_step3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reward developers`
+  String get pay_title {
+    return Intl.message(
+      'Reward developers',
+      name: 'pay_title',
       desc: '',
       args: [],
     );

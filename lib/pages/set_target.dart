@@ -1,7 +1,7 @@
+import 'package:copy_watch_face/generated/l10n.dart';
 import 'package:copy_watch_face/saf.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_storage/saf.dart' as saf;
 
@@ -37,26 +37,28 @@ class _SetTargetPageState extends State<SetTargetPage> {
       file.data![saf.DocumentFileColumn.size],
     );
     await prefs.setString("faceName", faceName);
-    Fluttertoast.showToast(msg: "设置成功");
+    Fluttertoast.showToast(msg: S.current.set_target_setSuccess);
+    // ignore: use_build_context_synchronously
     Navigator.pop(context);
   }
 
   Future<String?> setName() async {
     var ctl = TextEditingController();
+    var s = S.current;
     return showDialog<String?>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text("备注表盘名称"),
+        title: Text(s.set_target_noteTitle),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              "因为文件名称不具有可读性，因此需要您手动输入文件对应的表盘名称，以方便以后对应起来。",
-              style: TextStyle(color: Colors.black54, fontSize: 14),
+            Text(
+              s.set_target_noteDesc,
+              style: const TextStyle(color: Colors.black54, fontSize: 14),
             ),
             TextField(
               controller: ctl,
-              decoration: const InputDecoration(hintText: "请在此输入表盘名称"),
+              decoration: InputDecoration(hintText: s.set_target_inputHint),
             ),
           ],
         ),
@@ -64,16 +66,16 @@ class _SetTargetPageState extends State<SetTargetPage> {
           ElevatedButton(
             onPressed: () {
               if (ctl.text.isEmpty) {
-                Fluttertoast.showToast(msg: "请输入您所选择的表盘对应的名称，以作备注");
+                Fluttertoast.showToast(msg: s.set_target_noNameToast);
                 return;
               }
               Navigator.pop(context, ctl.text);
             },
-            child: const Text("确认"),
+            child: Text(s.sure),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("取消"),
+            child: Text(s.cancel),
           ),
         ],
       ),
@@ -97,11 +99,10 @@ class _SetTargetPageState extends State<SetTargetPage> {
 
   @override
   Widget build(BuildContext context) {
-    String hint =
-        "如果你知道被替换的表盘对应的文件名称，你可以在这里选择对应的文件。设置后软件将会保存设置，以后都会替换你选择的文件。\n\n";
-    hint = "$hint建议在选择前先正常安装一次要选择的表盘，以免偷天换日获取到不正确的信息。";
+    var s = S.of(context);
+    String hint = s.set_target_shuoMing;
     return Scaffold(
-      appBar: AppBar(title: const Text("自定义被替换的表盘")),
+      appBar: AppBar(title: Text(s.set_target_appbar_title)),
       body: Column(
         children: [
           Padding(
@@ -109,7 +110,7 @@ class _SetTargetPageState extends State<SetTargetPage> {
             child: Text(hint),
           ),
           Text(
-            "表盘文件列表",
+            s.set_target_file_list,
             style: Theme.of(context).textTheme.headline6,
           ),
           Expanded(
@@ -124,15 +125,17 @@ class _SetTargetPageState extends State<SetTargetPage> {
   }
 
   Widget itemBuilder(BuildContext context, int index) {
+    var s = S.of(context);
     var file = files[index];
     var size = file.data![saf.DocumentFileColumn.size];
-    var name = file.data![saf.DocumentFileColumn.displayName] ?? "未知文件";
+    var name = file.data![saf.DocumentFileColumn.displayName] ??
+        s.set_target_unknownFile;
     return ListTile(
-      title: Text("文件名称：$name"),
-      subtitle: Text("文件大小：$size字节"),
+      title: Text("${s.set_target_fileName}$name"),
+      subtitle: Text("${s.set_target_fileSize}${size}byte"),
       trailing: ElevatedButton(
         onPressed: () => setFile(file),
-        child: const Text("选择此表盘"),
+        child: Text(s.set_target_select),
       ),
     );
   }

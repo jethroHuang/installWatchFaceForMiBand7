@@ -3,9 +3,9 @@ import 'dart:typed_data';
 
 import 'package:app_launcher/app_launcher.dart';
 import 'package:copy_watch_face/face_controller.dart';
+import 'package:copy_watch_face/generated/l10n.dart';
+import 'package:copy_watch_face/util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:shared_storage/saf.dart' as saf;
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -26,12 +26,13 @@ class _ZeppLifePageState extends State<ZeppLifePage> {
   var targetName = "被偷的天";
 
   Future startReplace() async {
+    var s = S.of(context);
     if (!ctl.havePromise.value) {
-      ctl.toast(msg: "请先授权");
+      ctl.toast(msg: s.firstGivePromise);
       return;
     }
     if (ctl.customWatchPath.value.isEmpty) {
-      ctl.toast(msg: "请先选择表盘");
+      ctl.toast(msg: s.firstSelectFace);
       return;
     }
 
@@ -50,10 +51,11 @@ class _ZeppLifePageState extends State<ZeppLifePage> {
         displayName: ctl.target,
         bytes: bytes,
       );
-      ctl.toast(msg: "替换成功, 请在 Zepp Life 本地表盘中同步$targetName表盘");
+      String text = formatString(s.zepplife_success, "targetName", targetName);
+      ctl.toast(msg: text);
       AppLauncher.openApp(androidApplicationId: "com.xiaomi.hm.health");
     } catch (e) {
-      ctl.toast(msg: "替换失败");
+      ctl.toast(msg: s.replaceFail);
     }
   }
 
@@ -63,7 +65,7 @@ class _ZeppLifePageState extends State<ZeppLifePage> {
     var xml = await rootBundle.load("assets/infos.xml");
     var xmlData = xml.buffer.asUint8List();
     var child = await saf.child(ctl.directoryUri, "CUSTOM");
-    if (child == null) ctl.toast(msg: "创建目录失败");
+    if (child == null) ctl.toast(msg: S.current.zepplife_createDirFail);
     child!.createFile(
       mimeType: "text/xml",
       displayName: "infos.xml",
@@ -80,11 +82,15 @@ class _ZeppLifePageState extends State<ZeppLifePage> {
 
   @override
   Widget build(BuildContext context) {
-    var useTxt = "使用说明：\n    第一步，选择你要替换的表盘。第二步授权。"
-        "第三步，点击立即替换后，打开表盘商城中的表盘管理，在本地表盘中有个[$targetName]表盘，点击同步表盘即可。";
+    var s = S.of(context);
+    var useTxt = formatString(
+      s.zepplife_shiYongShuoMing,
+      "targetName",
+      targetName,
+    );
 
     return Scaffold(
-      appBar: AppBar(title: const Text("复制表盘->Zepp Life")),
+      appBar: AppBar(title: Text(s.zepplife_appbarTitle)),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,9 +101,9 @@ class _ZeppLifePageState extends State<ZeppLifePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(useTxt),
-                const Text(
-                  "\n此页面的功能仅适用于小米手环7+Zepp Life",
-                  style: TextStyle(color: Colors.red),
+                Text(
+                  s.zepplife_waring,
+                  style: const TextStyle(color: Colors.red),
                 )
               ],
             ),
@@ -107,9 +113,9 @@ class _ZeppLifePageState extends State<ZeppLifePage> {
             child: ValueListenableBuilder(
               valueListenable: ctl.selectName,
               builder: (context, String val, child) {
-                var selectText = "1. 选择你要替换的表盘";
+                var selectText = "1. ${s.zepplife_step1}";
                 if (val.isNotEmpty) {
-                  selectText = "$selectText(已选择：$val)";
+                  selectText = "${s.zepplife_step1_state}$val";
                 }
                 return SizedBox(
                   width: double.infinity,
@@ -123,9 +129,9 @@ class _ZeppLifePageState extends State<ZeppLifePage> {
             child: ValueListenableBuilder(
               valueListenable: ctl.havePromise,
               builder: (ctx, bool val, child) {
-                var promise = "2. 授权访问 Zepp Life 内部数据";
+                var promise = "2. ${s.zepplife_step2}";
                 if (val) {
-                  promise = "$promise(已授权)";
+                  promise = "$promise${s.zepplife_step2_state}";
                 }
                 return SizedBox(
                   width: double.infinity,
@@ -136,9 +142,9 @@ class _ZeppLifePageState extends State<ZeppLifePage> {
           ),
           MaterialButton(
             onPressed: startReplace,
-            child: const SizedBox(
+            child: SizedBox(
               width: double.infinity,
-              child: Text("3. 立即替换"),
+              child: Text("3. ${s.zepplife_step3}"),
             ),
           ),
         ],

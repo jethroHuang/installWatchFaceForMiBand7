@@ -22,8 +22,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "appName":
-            MessageLookupByLibrary.simpleMessage("replace your watchFace"),
+        "appName": MessageLookupByLibrary.simpleMessage("偷天换日"),
+        "cancel": MessageLookupByLibrary.simpleMessage("cancel"),
+        "clearDirectorySuccess":
+            MessageLookupByLibrary.simpleMessage("All files have been deleted"),
+        "delFaceFail": MessageLookupByLibrary.simpleMessage(
+            "Failed to delete the WatchFace"),
         "deletedNowFace":
             MessageLookupByLibrary.simpleMessage("deleted existing WatchFace"),
         "dontFundWatchFace": MessageLookupByLibrary.simpleMessage(
@@ -32,11 +36,17 @@ class MessageLookup extends MessageLookupByLibrary {
             "please grant permission first"),
         "firstSelectFace": MessageLookupByLibrary.simpleMessage(
             "please select the WatchFace first"),
+        "getPromise": MessageLookupByLibrary.simpleMessage(
+            "App has successfully obtained permissions"),
         "gotIt": MessageLookupByLibrary.simpleMessage("got it"),
         "healthEntry":
             MessageLookupByLibrary.simpleMessage("Mi Fitness Replacement"),
         "health_appbarTitle":
-            MessageLookupByLibrary.simpleMessage("copy WatchFace->Mi Fitness"),
+            MessageLookupByLibrary.simpleMessage("copy to Mi Fitness"),
+        "health_clearWatchFace": MessageLookupByLibrary.simpleMessage(
+            "clear the WatchFace directory"),
+        "health_otherTools":
+            MessageLookupByLibrary.simpleMessage("other tools"),
         "health_setTipsContent": MessageLookupByLibrary.simpleMessage(
             "Customizing the replaced WatchFace requires permission to access the WatchFace directory, please select \'Use this folder\' on the next page"),
         "health_shiYongShuoMing": MessageLookupByLibrary.simpleMessage(
@@ -51,15 +61,43 @@ class MessageLookup extends MessageLookupByLibrary {
         "health_step3":
             MessageLookupByLibrary.simpleMessage("began to replace"),
         "health_step4": MessageLookupByLibrary.simpleMessage(
-            "Open Mi Fitness and apply the [\$targetName] WatchFace"),
+            "open Mi Fitness and apply the [\$targetName] WatchFace"),
         "health_waring": MessageLookupByLibrary.simpleMessage(
             "\nthe features on this page are only available for Xiaomi Band 7 + Mi Fitness"),
         "noWorking":
             MessageLookupByLibrary.simpleMessage("waiting for the start"),
+        "notPromise": MessageLookupByLibrary.simpleMessage(
+            "App does not have permission"),
+        "pay_title": MessageLookupByLibrary.simpleMessage("Reward developers"),
+        "replaceFail": MessageLookupByLibrary.simpleMessage("replacement fail"),
         "replaceSuccess":
             MessageLookupByLibrary.simpleMessage("replacement completed"),
         "rewardMe": MessageLookupByLibrary.simpleMessage(
-            "☕buy the author a cup of coffee👈"),
+            "☕buy the developers a cup of coffee👈"),
+        "set_target_appbar_title": MessageLookupByLibrary.simpleMessage(
+            "Customize the replacement watchFace file"),
+        "set_target_fileName":
+            MessageLookupByLibrary.simpleMessage("File name: "),
+        "set_target_fileSize":
+            MessageLookupByLibrary.simpleMessage("File length: "),
+        "set_target_file_list":
+            MessageLookupByLibrary.simpleMessage("file list"),
+        "set_target_inputHint": MessageLookupByLibrary.simpleMessage(
+            "Please enter watchFace name here"),
+        "set_target_noNameToast": MessageLookupByLibrary.simpleMessage(
+            "Please enter the name of the WatchFace you selected for remarks"),
+        "set_target_noteDesc": MessageLookupByLibrary.simpleMessage(
+            "Because the file name is not readable, you need to manually enter the name of the WatchFace that corresponds to the file for later correspondence."),
+        "set_target_noteTitle":
+            MessageLookupByLibrary.simpleMessage("Note watchFace name"),
+        "set_target_select": MessageLookupByLibrary.simpleMessage("Select"),
+        "set_target_setSuccess":
+            MessageLookupByLibrary.simpleMessage("Set up the success"),
+        "set_target_shuoMing": MessageLookupByLibrary.simpleMessage(
+            "If you know the name of the file that corresponds to the replaced WatchFace, you can select the file here. The app will save the Settings and replace the files you choose later.\n\nIt is recommended to install the dial to be selected normally before selection to avoid incorrect information obtained by APP."),
+        "set_target_unknownFile":
+            MessageLookupByLibrary.simpleMessage("Unknown File"),
+        "sure": MessageLookupByLibrary.simpleMessage("sure"),
         "targetName": MessageLookupByLibrary.simpleMessage("age of mars"),
         "tips_title": MessageLookupByLibrary.simpleMessage("Tips"),
         "working":
@@ -67,6 +105,26 @@ class MessageLookup extends MessageLookupByLibrary {
         "workingState":
             MessageLookupByLibrary.simpleMessage("working status: "),
         "zeppLifeEntry":
-            MessageLookupByLibrary.simpleMessage("zepp Life Replacement")
+            MessageLookupByLibrary.simpleMessage("zepp Life Replacement"),
+        "zepplife_appbarTitle":
+            MessageLookupByLibrary.simpleMessage("copy to Zepp Life"),
+        "zepplife_createDirFail": MessageLookupByLibrary.simpleMessage(
+            "Failed to create directory. Please install WatchFace in \'zepp life\' first"),
+        "zepplife_shiYongShuoMing": MessageLookupByLibrary.simpleMessage(
+            "directions for use: \n    The first step is to select the WatchFace you want to replace. Step 2, give me permission. Step 3, click replace now, open the WatchFace management in the \'zepp life\', there is a [\$targetName] WatchFace in the local WatchFace, click apply watchFace."),
+        "zepplife_step1": MessageLookupByLibrary.simpleMessage(
+            "select the WatchFace you want to replace"),
+        "zepplife_step1_state":
+            MessageLookupByLibrary.simpleMessage("selected: "),
+        "zepplife_step2": MessageLookupByLibrary.simpleMessage(
+            "give me permission to the internal data"),
+        "zepplife_step2_state":
+            MessageLookupByLibrary.simpleMessage("(have permission)"),
+        "zepplife_step3":
+            MessageLookupByLibrary.simpleMessage("Immediately replace"),
+        "zepplife_success": MessageLookupByLibrary.simpleMessage(
+            "the replacement succeeded. please apply the [\$targetName] WatchFace in the Zepp Life local WatchFace"),
+        "zepplife_waring": MessageLookupByLibrary.simpleMessage(
+            "\nthe features on this page are only available for Xiaomi Band 7 + Zepp Life")
       };
 }

@@ -1,6 +1,6 @@
+import 'package:copy_watch_face/generated/l10n.dart';
 import 'package:copy_watch_face/saf.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -48,7 +48,7 @@ class FaceController {
         return false;
       }
     } catch (err) {
-      toast(msg: "删除表盘失败");
+      toast(msg: S.current.delFaceFail);
       throw Exception("删除表盘失败");
     }
   }
@@ -63,7 +63,7 @@ class FaceController {
         saf.delete(file.metadata!.uri!);
       }
     }, onDone: () {
-      toast(msg: "所有文件已删除");
+      toast(msg: S.current.clearDirectorySuccess);
     });
   }
 
@@ -72,10 +72,10 @@ class FaceController {
     final Uri? grantedUri = await saf.openDocumentTree(
         grantWritePermission: true, initialUri: directoryUri);
     if (grantedUri != null) {
-      toast(msg: "已成功获取权限");
+      toast(msg: S.current.getPromise);
       havePromise.value = true;
     } else {
-      toast(msg: "未获取权限");
+      toast(msg: S.current.notPromise);
     }
   }
 

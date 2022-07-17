@@ -11,6 +11,8 @@ class IndexPage extends StatefulWidget {
 }
 
 class _IndexPageState extends State<IndexPage> {
+  final String appVersion = "1.5";
+
   @override
   void initState() {
     Permission.storage.request();
@@ -32,7 +34,7 @@ class _IndexPageState extends State<IndexPage> {
             right: 0,
             child: Center(
               child: Text(
-                "$name 1.4 create by jethroHEX&bandbbs.cn",
+                "$name $appVersion create by jethroHEX&bandbbs.cn",
                 style: const TextStyle(color: Colors.grey),
               ),
             ),
