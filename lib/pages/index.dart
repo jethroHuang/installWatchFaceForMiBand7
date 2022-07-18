@@ -11,7 +11,7 @@ class IndexPage extends StatefulWidget {
 }
 
 class _IndexPageState extends State<IndexPage> {
-  final String appVersion = "1.5";
+  final String appVersion = "1.6";
 
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _IndexPageState extends State<IndexPage> {
                 ),
                 ElevatedButton(
                   onPressed: () => context.push("/ble_install"),
-                  child: const Text("蓝牙安装 "),
+                  child: Text(S.of(context).bleEntry),
                 ),
               ],
             ),

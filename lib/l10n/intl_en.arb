@@ -2,6 +2,7 @@
     "appName": "偷天换日",
     "healthEntry": "Mi Fitness Replacement",
     "zeppLifeEntry": "zepp Life Replacement",
+    "bleEntry": "Install WatchFace via Bluetooth",
     "rewardMe": "☕buy the developers a cup of coffee👈",
     "firstSelectFace": "please select the WatchFace first",
     "firstGivePromise": "please grant permission first",
@@ -59,5 +60,26 @@
     "zepplife_step2_state": "(have permission)",
     "zepplife_step3": "Immediately replace",
 
-    "pay_title": "Reward developers"
+    "pay_title": "Reward developers",
+
+    "ble_scan": "scan band",
+    "ble_scanning": "scanning",
+    "ble_title": "Bluetooth install",
+    "ble_connect": "connection",
+    "ble_connecting": "connecting",
+    "ble_connected": "device connected",
+    "ble_connectFail": "Connection failed. Please try again",
+    "ble_disconnected": "Bluetooth connection is disconnected",
+    "ble_connectedTo": "connected to: ",
+    "ble_select_file": "Select WatchFace",
+    "ble_reselectFile": "Reselect WatchFace",
+    "ble_selected": "selected: ",
+    "ble_install": "Install Now",
+    "ble_installProgress": "Installation progress: ",
+    "ble_notFindService": "Undiscovered service",
+    "ble_timeout": "Operation timed out",
+    "ble_install_fail": "Install Fail",
+    "ble_install_success": "Install Success",
+    "ble_tips": "Disclaimer: This feature has not been fully tested and the developer is not responsible for any consequences caused by its use.",
+    "ble_tips2": "If your band cannot be scanned, please enable 'Discoverable mode' in ZeppLife or Mi Fitness."
 }

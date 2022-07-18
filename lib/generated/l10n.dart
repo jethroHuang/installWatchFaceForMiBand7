@@ -80,6 +80,16 @@ class S {
     );
   }
 
+  /// `Install WatchFace via Bluetooth`
+  String get bleEntry {
+    return Intl.message(
+      'Install WatchFace via Bluetooth',
+      name: 'bleEntry',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `☕buy the developers a cup of coffee👈`
   String get rewardMe {
     return Intl.message(
@@ -615,6 +625,206 @@ class S {
     return Intl.message(
       'Reward developers',
       name: 'pay_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `scan band`
+  String get ble_scan {
+    return Intl.message(
+      'scan band',
+      name: 'ble_scan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `scanning`
+  String get ble_scanning {
+    return Intl.message(
+      'scanning',
+      name: 'ble_scanning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bluetooth install`
+  String get ble_title {
+    return Intl.message(
+      'Bluetooth install',
+      name: 'ble_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `connection`
+  String get ble_connect {
+    return Intl.message(
+      'connection',
+      name: 'ble_connect',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `connecting`
+  String get ble_connecting {
+    return Intl.message(
+      'connecting',
+      name: 'ble_connecting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `device connected`
+  String get ble_connected {
+    return Intl.message(
+      'device connected',
+      name: 'ble_connected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connection failed. Please try again`
+  String get ble_connectFail {
+    return Intl.message(
+      'Connection failed. Please try again',
+      name: 'ble_connectFail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bluetooth connection is disconnected`
+  String get ble_disconnected {
+    return Intl.message(
+      'Bluetooth connection is disconnected',
+      name: 'ble_disconnected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `connected to: `
+  String get ble_connectedTo {
+    return Intl.message(
+      'connected to: ',
+      name: 'ble_connectedTo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select WatchFace`
+  String get ble_select_file {
+    return Intl.message(
+      'Select WatchFace',
+      name: 'ble_select_file',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reselect WatchFace`
+  String get ble_reselectFile {
+    return Intl.message(
+      'Reselect WatchFace',
+      name: 'ble_reselectFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `selected: `
+  String get ble_selected {
+    return Intl.message(
+      'selected: ',
+      name: 'ble_selected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Install Now`
+  String get ble_install {
+    return Intl.message(
+      'Install Now',
+      name: 'ble_install',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Installation progress: `
+  String get ble_installProgress {
+    return Intl.message(
+      'Installation progress: ',
+      name: 'ble_installProgress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Undiscovered service`
+  String get ble_notFindService {
+    return Intl.message(
+      'Undiscovered service',
+      name: 'ble_notFindService',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Operation timed out`
+  String get ble_timeout {
+    return Intl.message(
+      'Operation timed out',
+      name: 'ble_timeout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Install Fail`
+  String get ble_install_fail {
+    return Intl.message(
+      'Install Fail',
+      name: 'ble_install_fail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Install Success`
+  String get ble_install_success {
+    return Intl.message(
+      'Install Success',
+      name: 'ble_install_success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Disclaimer: This feature has not been fully tested and the developer is not responsible for any consequences caused by its use.`
+  String get ble_tips {
+    return Intl.message(
+      'Disclaimer: This feature has not been fully tested and the developer is not responsible for any consequences caused by its use.',
+      name: 'ble_tips',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `If your band cannot be scanned, please enable 'Discoverable mode' in ZeppLife or Mi Fitness.`
+  String get ble_tips2 {
+    return Intl.message(
+      'If your band cannot be scanned, please enable \'Discoverable mode\' in ZeppLife or Mi Fitness.',
+      name: 'ble_tips2',
       desc: '',
       args: [],
     );

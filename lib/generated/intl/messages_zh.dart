@@ -23,6 +23,29 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "appName": MessageLookupByLibrary.simpleMessage("偷天换日"),
+        "bleEntry": MessageLookupByLibrary.simpleMessage("通过蓝牙安装表盘"),
+        "ble_connect": MessageLookupByLibrary.simpleMessage("连接"),
+        "ble_connectFail": MessageLookupByLibrary.simpleMessage("连接失败，请重试"),
+        "ble_connected": MessageLookupByLibrary.simpleMessage("设备已连接"),
+        "ble_connectedTo": MessageLookupByLibrary.simpleMessage("已连接至："),
+        "ble_connecting": MessageLookupByLibrary.simpleMessage("连接中"),
+        "ble_disconnected": MessageLookupByLibrary.simpleMessage("蓝牙连接已断开"),
+        "ble_install": MessageLookupByLibrary.simpleMessage("立即安装"),
+        "ble_installProgress": MessageLookupByLibrary.simpleMessage("安装进度："),
+        "ble_install_fail": MessageLookupByLibrary.simpleMessage("安装失败"),
+        "ble_install_success": MessageLookupByLibrary.simpleMessage("安装成功"),
+        "ble_notFindService": MessageLookupByLibrary.simpleMessage("未发现服务"),
+        "ble_reselectFile": MessageLookupByLibrary.simpleMessage("重新选择表盘"),
+        "ble_scan": MessageLookupByLibrary.simpleMessage("扫描手环"),
+        "ble_scanning": MessageLookupByLibrary.simpleMessage("扫描中"),
+        "ble_select_file": MessageLookupByLibrary.simpleMessage("选择表盘"),
+        "ble_selected": MessageLookupByLibrary.simpleMessage("已选择："),
+        "ble_timeout": MessageLookupByLibrary.simpleMessage("操作超时"),
+        "ble_tips": MessageLookupByLibrary.simpleMessage(
+            "免责声明：此功能未经过充分测试，使用此功能造成的任何后果开发者均不负责。"),
+        "ble_tips2": MessageLookupByLibrary.simpleMessage(
+            "如果扫描不到你的手环，请在ZeppLife或者小米运动健康中开启“蓝牙广播”"),
+        "ble_title": MessageLookupByLibrary.simpleMessage("蓝牙安装"),
         "cancel": MessageLookupByLibrary.simpleMessage("取消"),
         "clearDirectorySuccess":
             MessageLookupByLibrary.simpleMessage("所有文件已删除"),

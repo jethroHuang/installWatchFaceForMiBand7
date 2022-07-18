@@ -23,6 +23,41 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "appName": MessageLookupByLibrary.simpleMessage("偷天换日"),
+        "bleEntry": MessageLookupByLibrary.simpleMessage(
+            "Install WatchFace via Bluetooth"),
+        "ble_connect": MessageLookupByLibrary.simpleMessage("connection"),
+        "ble_connectFail": MessageLookupByLibrary.simpleMessage(
+            "Connection failed. Please try again"),
+        "ble_connected":
+            MessageLookupByLibrary.simpleMessage("device connected"),
+        "ble_connectedTo":
+            MessageLookupByLibrary.simpleMessage("connected to: "),
+        "ble_connecting": MessageLookupByLibrary.simpleMessage("connecting"),
+        "ble_disconnected": MessageLookupByLibrary.simpleMessage(
+            "Bluetooth connection is disconnected"),
+        "ble_install": MessageLookupByLibrary.simpleMessage("Install Now"),
+        "ble_installProgress":
+            MessageLookupByLibrary.simpleMessage("Installation progress: "),
+        "ble_install_fail":
+            MessageLookupByLibrary.simpleMessage("Install Fail"),
+        "ble_install_success":
+            MessageLookupByLibrary.simpleMessage("Install Success"),
+        "ble_notFindService":
+            MessageLookupByLibrary.simpleMessage("Undiscovered service"),
+        "ble_reselectFile":
+            MessageLookupByLibrary.simpleMessage("Reselect WatchFace"),
+        "ble_scan": MessageLookupByLibrary.simpleMessage("scan band"),
+        "ble_scanning": MessageLookupByLibrary.simpleMessage("scanning"),
+        "ble_select_file":
+            MessageLookupByLibrary.simpleMessage("Select WatchFace"),
+        "ble_selected": MessageLookupByLibrary.simpleMessage("selected: "),
+        "ble_timeout":
+            MessageLookupByLibrary.simpleMessage("Operation timed out"),
+        "ble_tips": MessageLookupByLibrary.simpleMessage(
+            "Disclaimer: This feature has not been fully tested and the developer is not responsible for any consequences caused by its use."),
+        "ble_tips2": MessageLookupByLibrary.simpleMessage(
+            "If your band cannot be scanned, please enable \'Discoverable mode\' in ZeppLife or Mi Fitness."),
+        "ble_title": MessageLookupByLibrary.simpleMessage("Bluetooth install"),
         "cancel": MessageLookupByLibrary.simpleMessage("cancel"),
         "clearDirectorySuccess":
             MessageLookupByLibrary.simpleMessage("All files have been deleted"),

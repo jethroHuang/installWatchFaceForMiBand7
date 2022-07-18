@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'dart:ffi';
 import 'dart:io';
-import 'dart:math';
 import 'dart:typed_data';
+import 'package:copy_watch_face/generated/l10n.dart';
 import 'package:crclib/catalog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -24,16 +24,30 @@ class _BlePageState extends State<BlePage> {
   DiscoveredDevice? connetDev;
   StreamSubscription<ConnectionStateUpdate>? sub;
 
+  bool scaning = false;
+
+  StreamSubscription<DiscoveredDevice>? scanSub;
+
   Future scan() async {
+    var value = await Permission.location.request();
+    if (value.isDenied) {
+      Fluttertoast.showToast(msg: S.current.firstGivePromise);
+      return;
+    }
     print("开始扫描");
-    flutterReactiveBle.scanForDevices(
+    setState(() {
+      scaning = true;
+    });
+    scanSub = flutterReactiveBle.scanForDevices(
       withServices: [],
       scanMode: ScanMode.lowLatency,
     ).listen((device) {
       if (devs.indexWhere((element) => element.id == device.id) < 0) {
-        setState(() {
-          devs.add(device);
-        });
+        if (device.name.isNotEmpty && device.name.contains("Band")) {
+          setState(() {
+            devs.add(device);
+          });
+        }
       }
     }, onError: (err) {
       print("扫描错误: $err");
@@ -41,39 +55,41 @@ class _BlePageState extends State<BlePage> {
   }
 
   clickDev(DiscoveredDevice dev) {
+    var s = S.of(context);
+    EasyLoading.show(status: s.ble_connecting);
     sub = flutterReactiveBle
         .connectToDevice(
       id: dev.id,
       connectionTimeout: const Duration(seconds: 10),
     )
-        .listen(
-      (event) {
-        if (event.connectionState == DeviceConnectionState.connected) {
-          Fluttertoast.showToast(msg: "设备已连接");
-          setState(() {
-            connetDev = dev;
-          });
-        } else {
-          setState(() {
-            connetDev = null;
-          });
-          if (event.connectionState == DeviceConnectionState.disconnected) {
-            Fluttertoast.showToast(msg: "连接已断开");
-          }
+        .listen((event) {
+      if (event.connectionState == DeviceConnectionState.connected) {
+        EasyLoading.dismiss();
+        Fluttertoast.showToast(msg: s.ble_connected);
+        setState(() {
+          connetDev = dev;
+        });
+      } else {
+        setState(() {
+          connetDev = null;
+        });
+        if (event.connectionState == DeviceConnectionState.disconnected) {
+          EasyLoading.dismiss();
+          Fluttertoast.showToast(msg: s.ble_disconnected);
         }
-      },
-    );
+      }
+    }, onError: (error) {
+      setState(() {
+        EasyLoading.dismiss();
+        Fluttertoast.showToast(msg: s.ble_connectFail);
+      });
+    });
   }
 
   update(String devId) {}
 
   @override
   void initState() {
-    Permission.location.request().then((value) {
-      if (value.isDenied) {
-        Fluttertoast.showToast(msg: "没得权限无法正常运行");
-      }
-    });
     flutterReactiveBle.initialize();
     super.initState();
   }
@@ -82,25 +98,55 @@ class _BlePageState extends State<BlePage> {
   void dispose() {
     flutterReactiveBle.deinitialize();
     sub?.cancel();
+    scanSub?.cancel();
+    EasyLoading.dismiss();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    var s = S.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text("蓝牙安装")),
+      appBar: AppBar(title: Text(s.ble_title)),
       body: connetDev != null
           ? _ConnectState(device: connetDev!, ble: flutterReactiveBle)
           : Column(
               children: [
-                ElevatedButton(onPressed: scan, child: const Text("扫描设备")),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      Text(
+                        s.ble_tips,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                      Text(
+                        s.ble_tips2,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: Colors.grey),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: scaning ? null : scan,
+                    child: Text(scaning ? s.ble_scanning : s.ble_scan),
+                  ),
+                ),
                 Expanded(
                   child: ListView.builder(
                     itemBuilder: (ctx, index) {
                       var dev = devs[index];
-                      return GestureDetector(
-                        onTap: () => clickDev(dev),
-                        child: Text("${dev.id}[${dev.name}]"),
+                      return ListTile(
+                        title: Text(dev.name),
+                        subtitle: Text(dev.id),
+                        trailing: ElevatedButton(
+                          onPressed: () => clickDev(dev),
+                          child: Text(s.ble_connect),
+                        ),
                       );
                     },
                     itemCount: devs.length,
@@ -125,12 +171,16 @@ class _ConnectState extends StatefulWidget {
 class __ConnectStateState extends State<_ConnectState> {
   ValueNotifier<String> customWatchPath = ValueNotifier("");
   ValueNotifier<String> selectName = ValueNotifier(""); // 已选择的表盘
+  ValueNotifier<int> bettery = ValueNotifier(0); // 电池电量
   Stream<List<int>>? stream;
+
+  bool installing = false; // 是否安装中
+  double progress = 0; // 安装进度
 
   getBettery() async {
     var chara = await findCharacteristic("0000180f", "00002a19");
     var res = await widget.ble.readCharacteristic(chara);
-
+    bettery.value = res[0];
     print("电池电量${res[0]}");
   }
 
@@ -154,7 +204,7 @@ class __ConnectStateState extends State<_ConnectState> {
       sub!.cancel();
     });
     return c.future.timeout(const Duration(seconds: 10), onTimeout: () {
-      return Future.error(Exception("等待超时"));
+      return Future.error(MsgException(S.current.ble_timeout));
     });
   }
 
@@ -183,12 +233,37 @@ class __ConnectStateState extends State<_ConnectState> {
         sub?.cancel();
       }
     });
-    return c.future.timeout(const Duration(seconds: 10), onTimeout: () {
-      return Future.error(Exception("等待超时"));
+    return c.future.timeout(const Duration(seconds: 20), onTimeout: () {
+      setState(() {
+        progress = 0;
+        installing = false;
+      });
+      return Future.error(MsgException(S.current.ble_timeout));
     });
   }
 
-  start() async {
+  /// 对 start 封装一层 好维护安装状态
+  safeInstall() async {
+    setState(() {
+      installing = true;
+    });
+    try {
+      await install();
+      Fluttertoast.showToast(msg: S.current.ble_install_success);
+    } catch (e) {
+      if (e is MsgException) {
+        Fluttertoast.showToast(msg: e.msg);
+      } else {
+        Fluttertoast.showToast(msg: S.current.ble_install_fail);
+      }
+    }
+    setState(() {
+      installing = false;
+    });
+  }
+
+  /// 执行安装任务
+  install() async {
     var char = await findCharacteristic("00001530", "00001531");
     var charWiret = await findCharacteristic("00001530", "00001532");
     if (stream == null) {
@@ -227,6 +302,12 @@ class __ConnectStateState extends State<_ConnectState> {
       print("notify ${print16hex(d)}");
     }
 
+    updateProgress(int flag) {
+      setState(() {
+        progress = flag / bytesLength;
+      });
+    }
+
     await sendData([0xd0]);
     await sendData([0xd1]);
     await sendData(bytesBuilder.toBytes());
@@ -252,6 +333,7 @@ class __ConnectStateState extends State<_ConnectState> {
         print("已同步长度: ${print16hex(send)}");
         time = 0;
         flag = flag + size;
+        updateProgress(flag);
         continue;
       }
       int size = 244;
@@ -262,6 +344,7 @@ class __ConnectStateState extends State<_ConnectState> {
       await widget.ble.writeCharacteristicWithoutResponse(charWiret, value: p);
       flag = flag + size;
       time++;
+      updateProgress(flag);
     }
     print("等待同步完成");
     await onSyncEnd(bytesLength);
@@ -319,8 +402,7 @@ class __ConnectStateState extends State<_ConnectState> {
       }
     }
     if (serviceId == null || cid == null) {
-      Fluttertoast.showToast(msg: "未发现服务");
-      throw Exception("未发现服务");
+      throw MsgException(S.current.ble_notFindService);
     }
     return QualifiedCharacteristic(
       characteristicId: cid,
@@ -331,29 +413,120 @@ class __ConnectStateState extends State<_ConnectState> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text("已连接至：${widget.device.name}"),
-        ValueListenableBuilder(
-            valueListenable: selectName,
-            builder: (ctx, String val, child) {
-              return Text("已选择表盘：$val");
-            }),
-        ElevatedButton(onPressed: getBettery, child: const Text("电池电量")),
-        ElevatedButton(onPressed: getHeart, child: const Text("获取心率")),
-        ElevatedButton(onPressed: start, child: const Text("安装")),
-        ElevatedButton(onPressed: selectWatch, child: const Text("选择表盘")),
-      ],
+    var s = S.of(context);
+    return Container(
+      padding: const EdgeInsets.all(16),
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text("${s.ble_connectedTo}${widget.device.name}"),
+          ValueListenableBuilder(
+            valueListenable: bettery,
+            builder: betteryBuilder,
+          ),
+          Expanded(
+            child: Center(
+              child: ValueListenableBuilder(
+                valueListenable: selectName,
+                builder: (ctx, String val, child) {
+                  if (val.isEmpty) {
+                    return ElevatedButton(
+                      onPressed: selectWatch,
+                      child: Text(s.ble_select_file),
+                    );
+                  }
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 64),
+                        child: buildProgress(),
+                      ),
+                      Text("${s.ble_selected}$val"),
+                      const SizedBox(height: 8),
+                      ElevatedButton(
+                        onPressed: installing ? null : safeInstall,
+                        child: Text(s.ble_install),
+                      ),
+                      ElevatedButton(
+                        onPressed: installing ? null : selectWatch,
+                        child: Text(s.ble_reselectFile),
+                      )
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   @override
   void initState() {
+    getBettery();
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
+    if (Platform.isAndroid) {
+      widget.ble.clearGattCache(widget.device.id);
+    }
   }
+
+  Widget buildProgress() {
+    var s = S.of(context);
+    return SizedBox(
+      width: 200,
+      height: 200,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: CircularProgressIndicator(
+              color: Theme.of(context).primaryColor,
+              backgroundColor: Colors.grey[200],
+              strokeWidth: 16,
+              value: progress,
+            ),
+          ),
+          Positioned.fill(
+            child: Center(
+              child: Text(
+                "${s.ble_installProgress}${(progress * 100).toInt()}%",
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // 电量显示
+  Widget betteryBuilder(BuildContext context, int value, Widget? child) {
+    if (value == 0) {
+      return const SizedBox();
+    }
+    Color color;
+    if (value > 20) {
+      color = Colors.green;
+    } else if (value > 10) {
+      color = Colors.orange;
+    } else {
+      color = Colors.red;
+    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [Icon(Icons.battery_full_sharp, color: color), Text("$value%")],
+    );
+  }
+}
+
+class MsgException implements Exception {
+  final String msg;
+
+  MsgException(this.msg);
 }
