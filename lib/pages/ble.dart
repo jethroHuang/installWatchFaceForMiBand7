@@ -399,6 +399,9 @@ class __ConnectStateState extends State<_ConnectState> {
           }
         }
         break;
+      } else {
+        String uuid = element.serviceId.toString();
+        print("uuid: $uuid");
       }
     }
     if (serviceId == null || cid == null) {
@@ -466,7 +469,9 @@ class __ConnectStateState extends State<_ConnectState> {
 
   @override
   void initState() {
-    getBettery();
+    if (Platform.isAndroid) {
+      getBettery();
+    }
     super.initState();
   }
 

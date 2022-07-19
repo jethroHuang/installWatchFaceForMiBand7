@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:copy_watch_face/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -22,6 +24,7 @@ class _IndexPageState extends State<IndexPage> {
   @override
   Widget build(BuildContext context) {
     String name = S.of(context).appName;
+    bool isAndroid = Platform.isAndroid;
     return Scaffold(
       appBar: AppBar(
         title: Text(name),
@@ -44,14 +47,16 @@ class _IndexPageState extends State<IndexPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
-                  onPressed: () => context.push("/health"),
-                  child: Text(S.of(context).healthEntry),
-                ),
-                ElevatedButton(
-                  onPressed: () => context.push("/zepp_life"),
-                  child: Text(S.of(context).zeppLifeEntry),
-                ),
+                if (isAndroid)
+                  ElevatedButton(
+                    onPressed: () => context.push("/health"),
+                    child: Text(S.of(context).healthEntry),
+                  ),
+                if (isAndroid)
+                  ElevatedButton(
+                    onPressed: () => context.push("/zepp_life"),
+                    child: Text(S.of(context).zeppLifeEntry),
+                  ),
                 ElevatedButton(
                   onPressed: () => context.push("/ble_install"),
                   child: Text(S.of(context).bleEntry),
