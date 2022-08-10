@@ -193,7 +193,7 @@ class __ConnectStateState extends State<_ConnectState> {
       c.complete(event);
       sub!.cancel();
     });
-    return c.future.timeout(const Duration(seconds: 10), onTimeout: () {
+    return c.future.timeout(const Duration(seconds: 60), onTimeout: () {
       return Future.error(MsgException(S.current.ble_timeout));
     });
   }
@@ -223,7 +223,7 @@ class __ConnectStateState extends State<_ConnectState> {
         sub?.cancel();
       }
     });
-    return c.future.timeout(const Duration(seconds: 20), onTimeout: () {
+    return c.future.timeout(const Duration(seconds: 60), onTimeout: () {
       setState(() {
         progress = 0;
         installing = false;
@@ -389,6 +389,9 @@ class __ConnectStateState extends State<_ConnectState> {
           }
         }
         break;
+      } else {
+        String uuid = element.serviceId.toString();
+        print("uuid: $uuid");
       }
     }
     if (serviceId == null || cid == null) {
@@ -461,7 +464,9 @@ class __ConnectStateState extends State<_ConnectState> {
 
   @override
   void initState() {
-    getBettery();
+    if (Platform.isAndroid) {
+      getBettery();
+    }
     super.initState();
   }
 
