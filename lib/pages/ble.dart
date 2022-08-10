@@ -184,16 +184,6 @@ class __ConnectStateState extends State<_ConnectState> {
     print("电池电量${res[0]}");
   }
 
-  getHeart() async {
-    var sub = await findCharacteristic("0000180d", "00002a37");
-    var ble = widget.ble;
-    ble.subscribeToCharacteristic(sub).listen((event) {
-      print("心率:$event");
-    }, onError: (err) {
-      print("心率订阅错误: $err");
-    });
-    print("完成操作");
-  }
 
   Future<List<int>> awaitRes() {
     if (stream == null) throw Exception("未订阅");
@@ -431,9 +421,14 @@ class __ConnectStateState extends State<_ConnectState> {
                 valueListenable: selectName,
                 builder: (ctx, String val, child) {
                   if (val.isEmpty) {
-                    return ElevatedButton(
-                      onPressed: selectWatch,
-                      child: Text(s.ble_select_file),
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: selectWatch,
+                          child: Text(s.ble_select_file),
+                        ),
+                      ],
                     );
                   }
                   return Column(
