@@ -1,6 +1,8 @@
-# copy_watch_face
+# installWatchFaceForMiBand7
 
-A new Flutter project.
+使用此app可通过蓝牙为小米手环7安装表盘及小程序。也可以使用替换法进行安装
+
+Using this app, you can install the dial and small program for Mi Band 7 through Bluetooth. You can also install using the replacement method
 
 ## Getting Started
 
